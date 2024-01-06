@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
 library flutter_datetime_picker;
 
 import 'package:flutter/material.dart';
-import 'package:ftoast/ftoast.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/utils/constanst.dart';
 import 'package:todo_app/models/task1.dart';
 import '../../main.dart';
 import '../../utils/strings.dart';
@@ -105,8 +104,8 @@ class _TaskViewState extends State<TaskView> {
         widget.taskControllerForTitle?.text = title;
         widget.taskControllerForSubtitle?.text = subtitle;
 
-        widget.task?.createdAtDate = date!;
-        widget.task?.createdAtTime = time!;
+        // widget.task?.createdAtDate = date!;
+        // widget.task?.createdAtTime = time!;
 
         widget.task?.save();
         Navigator.of(context).pop();
@@ -144,7 +143,7 @@ class _TaskViewState extends State<TaskView> {
         appBar: const MyAppBar(),
         body: SizedBox(
           width: double.infinity,
-          height: double.infinity,
+          height: 600,
           child: Center(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -196,10 +195,10 @@ class _TaskViewState extends State<TaskView> {
 
               /// Delete Task Button
               : Container(
-                  width: 130,
+                  width: 100,
                   height: 55,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 2),
+                    //border: Border.all(color: Colors.grey, width: 2),
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: const [
                       BoxShadow(
@@ -214,7 +213,7 @@ class _TaskViewState extends State<TaskView> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    minWidth: 100,
+                    minWidth: 150,
                     height: 55,
                     onPressed: () {
                       deleteTask();
@@ -224,7 +223,7 @@ class _TaskViewState extends State<TaskView> {
                     child: const Row(
                       children: [
                         Text(
-                          AppString.deleteTask,
+                          MyString.deleteTask,
                           style: TextStyle(color: Colors.white),
                         ),
                       ],
@@ -233,22 +232,32 @@ class _TaskViewState extends State<TaskView> {
                 ),
 
           /// Add or Update Task Button
-          MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            minWidth: 100,
-            height: 55,
-            onPressed: () {
-              isTaskAlreadyExistUpdateTask();
-            },
-            color: Colors.blueGrey,
-            child: Text(
-              isTaskAlreadyExistBool()
-                  ? AppString.addTaskString
-                  : AppString.updateTaskString,
-              style: const TextStyle(
-                color: Colors.white,
+          Container(
+            decoration: const BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 0.0),
+                blurRadius: 10.0,
+                spreadRadius: 0.0,
+              ),
+            ]),
+            child: MaterialButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              minWidth: 100,
+              height: 55,
+              onPressed: () {
+                isTaskAlreadyExistUpdateTask();
+              },
+              color: Colors.blueGrey,
+              child: Text(
+                isTaskAlreadyExistBool()
+                    ? MyString.addTaskString
+                    : MyString.updateTaskString,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -269,20 +278,26 @@ class _TaskViewState extends State<TaskView> {
           /// Title of TextFiled
           const Padding(
             padding: EdgeInsets.only(left: 30),
-            child: Text(AppString.titleOfTitleTextField,
-                style: TextStyle(fontSize: 16, color: Colors.grey)),
+            child: Text(MyString.titleOfTitleTextField,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                )),
           ),
 
           /// Title TextField
           Container(
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
             child: ListTile(
               title: TextFormField(
                 controller: widget.taskControllerForTitle,
                 maxLines: 2,
                 cursorHeight: 30,
-                style: const TextStyle(color: Colors.black, fontSize: 28),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                ),
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey.shade300),
@@ -302,10 +317,6 @@ class _TaskViewState extends State<TaskView> {
             ),
           ),
 
-          const SizedBox(
-            height: 5,
-          ),
-
           /// Note TextField
           Container(
             width: MediaQuery.of(context).size.width,
@@ -313,13 +324,15 @@ class _TaskViewState extends State<TaskView> {
             child: ListTile(
               title: TextFormField(
                 controller: widget.taskControllerForSubtitle,
-                style: const TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 18),
                 decoration: InputDecoration(
-                  prefixIcon:
-                      const Icon(Icons.bookmark_border, color: Colors.grey),
+                  prefixIcon: const Icon(
+                    Icons.bookmark_border,
+                    color: Colors.grey,
+                  ),
                   border: InputBorder.none,
                   counter: Container(),
-                  hintText: AppString.addNote,
+                  hintText: MyString.addNote,
                 ),
                 onFieldSubmitted: (value) {
                   subtitle = value;
@@ -370,7 +383,7 @@ class _TaskViewState extends State<TaskView> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 5),
-                    child: Text(AppString.timeString,
+                    child: Text(MyString.timeString,
                         style: TextStyle(fontSize: 16)),
                   ),
                   Expanded(child: Container()),
@@ -433,13 +446,13 @@ class _TaskViewState extends State<TaskView> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(left: 5),
-                    child: Text(AppString.dateString,
+                    child: Text(MyString.dateString,
                         style: TextStyle(fontSize: 16)),
                   ),
                   Expanded(child: Container()),
                   Container(
                     margin: const EdgeInsets.only(right: 10),
-                    width: 140,
+                    width: 100,
                     height: 35,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -467,13 +480,13 @@ class _TaskViewState extends State<TaskView> {
   SizedBox _buildTopText(TextTheme textTheme) {
     return SizedBox(
       width: double.infinity,
-      height: 100,
+      height: 90,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
-            width: 80,
+            width: 50,
             child: Divider(
               thickness: 2,
             ),
@@ -481,56 +494,33 @@ class _TaskViewState extends State<TaskView> {
           RichText(
             text: TextSpan(
                 text: isTaskAlreadyExistBool()
-                    ? AppString.addNewTask
-                    : AppString.updateCurrentTask,
+                    ? MyString.addNewTask
+                    : MyString.updateCurrentTask,
                 style: const TextStyle(
-                  fontSize: 35,
+                  fontSize: 40,
                   color: Colors.black,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.bold,
                 ),
                 children: const [
                   TextSpan(
-                    text: AppString.taskStrnig,
+                    text: MyString.taskStrnig,
                     style: TextStyle(
-                      fontWeight: FontWeight.w400,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
                     ),
                   )
                 ]),
           ),
           const SizedBox(
-            width: 70,
+            width: 50,
             child: Divider(
-              thickness: 3,
+              thickness: 2,
             ),
           ),
         ],
       ),
     );
   }
-}
-
-/// Empty Title & Subtite TextFields Warning
-emptyFieldsWarning(context) {
-  return FToast.toast(
-    context,
-    msg: AppString.oopsMsg,
-    subMsg: "You must fill all Fields!",
-    corner: 20.0,
-    duration: 2000,
-    padding: const EdgeInsets.all(20),
-  );
-}
-
-/// Nothing Enter When user try to edit the current tesk
-nothingEnterOnUpdateTaskMode(context) {
-  return FToast.toast(
-    context,
-    msg: AppString.oopsMsg,
-    subMsg: "You must edit the tasks then try to update it!",
-    corner: 20.0,
-    duration: 3000,
-    padding: const EdgeInsets.all(20),
-  );
 }
 
 /// AppBar
@@ -541,28 +531,30 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 90,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  size: 25,
+    return SafeArea(
+      child: SizedBox(
+        width: double.infinity,
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    size: 25,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

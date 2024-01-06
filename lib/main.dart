@@ -3,9 +3,9 @@ import 'package:todo_app/data/data.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/models/task1.dart';
 import 'package:todo_app/models/task_g.dart';
-import 'package:todo_app/views/home/homeview.dart';
+import 'package:todo_app/views/home/home_view.dart';
 
-void main() async {
+Future<void> main() async {
   /// Initial Hive DB
   await Hive.initFlutter();
 

@@ -1,5 +1,5 @@
-class AppString {
-  static const String mainTitle = "T  a  s  k  s ";
+class MyString {
+  static const String mainTitle = " A l l  T a s k s ";
   static const String deletedTask = "This task was deleted";
   static const String doneAllTask = "You Have Done All Tasks!👌";
   static const String addNewTask = "Add New ";

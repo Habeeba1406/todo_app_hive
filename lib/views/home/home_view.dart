@@ -1,9 +1,9 @@
-// ignore_for_file: must_be_immutable
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:todo_app/utils/constanst.dart';
 import 'package:todo_app/main.dart';
 import 'package:todo_app/models/task1.dart';
 import 'package:todo_app/views/home/widget/task_widget.dart';
@@ -50,34 +50,36 @@ class _HomeViewState extends State<HomeView> {
         builder: (ctx, Box<Task> box, Widget? child) {
           var tasks = box.values.toList();
 
-          /// Sort Task List
-          //tasks.sort(((a, b) => a.createdAtDate.compareTo(b.createdAtDate)));
+          //  Sort Task List
+          tasks.sort(((a, b) => a.createdAtDate.compareTo(b.createdAtDate)));
 
-          return Scaffold(
-            backgroundColor: Colors.white,
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.white,
 
-            /// Floating Action Button
-            floatingActionButton: const FAB(),
+              /// Floating Action Button
+              floatingActionButton: const FAB(),
 
-            /// Body
-            body: SliderDrawer(
-              isDraggable: false,
-              key: dKey,
-              animationDuration: 1000,
+              /// Body
+              body: SliderDrawer(
+                isDraggable: false,
+                key: dKey,
+                animationDuration: 1000,
 
-              /// My AppBar
-              appBar: MyAppBar(
-                drawerKey: dKey,
-              ),
+                /// My AppBar
+                appBar: MyAppBar(
+                  drawerKey: dKey,
+                ),
 
-              /// My Drawer Slider
-              slider: MySlider(),
+                /// My Drawer Slider
+                slider: MySlider(),
 
-              /// Main Body
-              child: _buildBody(
-                tasks,
-                base,
-                textTheme,
+                /// Main Body
+                child: _buildBody(
+                  tasks,
+                  base,
+                  textTheme,
+                ),
               ),
             ),
           );
@@ -101,6 +103,7 @@ class _HomeViewState extends State<HomeView> {
             width: double.infinity,
             height: 90,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 /// CircularProgressIndicator
@@ -114,55 +117,33 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 const SizedBox(
-                  width: 15,
+                  width: 20,
                   height: 20,
                 ),
 
                 /// Texts
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(AppString.mainTitle,
-                        style: TextStyle(fontSize: 45, color: Colors.blueGrey)),
-                    const SizedBox(
-                      height: 2,
-                      width: 2,
-                    ),
+                    const Text(MyString.mainTitle,
+                        style: TextStyle(fontSize: 40, color: Colors.blueGrey)),
+                    // const SizedBox(
+                    //   height: 2,
+                    //   width: 2,
+                    // ),
                     Text("${checkDoneTask(tasks)} of ${tasks.length} task",
                         style: const TextStyle(
-                            fontSize: 22, color: Colors.blueGrey)),
+                            fontSize: 18, color: Colors.blueGrey)),
                   ],
                 )
               ],
             ),
           ),
 
-          // Divider
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 0.0),
-                  blurRadius: 10.0,
-                  spreadRadius: 0.0,
-                ),
-              ],
-            ),
-            child: const Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Divider(
-                thickness: 3,
-              ),
-            ),
-          ),
-
           // Bottom ListView : Tasks
           SizedBox(
             width: double.infinity,
-            height: 600,
+            height: 590,
             child: tasks.isNotEmpty
                 ? Container(
                     decoration: const BoxDecoration(
@@ -197,19 +178,19 @@ class _HomeViewState extends State<HomeView> {
                           return Dismissible(
                             direction: DismissDirection.horizontal,
                             background: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.delete,
+                                  Icons.delete_outline,
                                   color: Colors.grey,
-                                  size: 30,
                                 ),
                                 SizedBox(
                                   width: 8,
                                 ),
-                                Text(AppString.deletedTask,
+                                Text(MyString.deletedTask,
                                     style: TextStyle(
-                                        color: Colors.grey, fontSize: 20))
+                                      color: Colors.grey,
+                                    ))
                               ],
                             ),
                             onDismissed: (direction) {
@@ -231,24 +212,24 @@ class _HomeViewState extends State<HomeView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       /// Lottie
-                      FadeIn(
-                        child: const SizedBox(
-                          width: 100,
-                          height: 100,
-                          // child: Lottie.asset(
-                          //   lottieURL,
-                          //   animate: tasks.isNotEmpty ? false : true,
-                          // ),
-                        ),
-                      ),
+                      // FadeIn(
+                      //   child: SizedBox(
+                      //     width: 200,
+                      //     height: 200,
+                      //     child: Lottie.asset(
+                      //       lottieURL,
+                      //       animate: tasks.isNotEmpty ? false : true,
+                      //     ),
+                      //   ),
+                      // ),
 
                       /// Bottom Texts
                       FadeInUp(
-                        from: 30,
+                        from: 10,
                         child: const Text(
-                          AppString.doneAllTask,
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                          MyString.doneAllTask,
+                          // style: TextStyle(
+                          //     fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -261,11 +242,16 @@ class _HomeViewState extends State<HomeView> {
 }
 
 /// My Drawer Slider
-class MySlider extends StatelessWidget {
-  MySlider({
+class MySlider extends StatefulWidget {
+  const MySlider({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<MySlider> createState() => _MySliderState();
+}
+
+class _MySliderState extends State<MySlider> {
   /// Icons
   List<IconData> icons = [
     CupertinoIcons.home,
@@ -286,21 +272,27 @@ class MySlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var textTheme = Theme.of(context).textTheme;
+    var textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 90),
-      decoration: const BoxDecoration(color: Colors.blueGrey),
+      padding: const EdgeInsets.symmetric(vertical: 60),
+      decoration: const BoxDecoration(
+        color: Colors.blueGrey,
+        // gradient: LinearGradient(
+        //     colors: Colors.accents,
+        //     begin: Alignment.topLeft,
+        //     end: Alignment.bottomRight),
+      ),
       child: Column(
         children: [
           const Center(
               child: Text(
             ' P R O F I L E',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
           )),
           const SizedBox(
             height: 6,
           ),
-          const Text("Habeeba Nazrin",
+          const Text("Habeeba  Nazrin",
               style: TextStyle(fontSize: 20, color: Colors.white)),
           Container(
             margin: const EdgeInsets.symmetric(
@@ -308,7 +300,7 @@ class MySlider extends StatelessWidget {
               horizontal: 10,
             ),
             width: double.infinity,
-            height: 350,
+            height: 300,
             child: ListView.builder(
                 itemCount: icons.length,
                 physics: const NeverScrollableScrollPhysics(),
@@ -392,11 +384,12 @@ class _MyAppBarState extends State<MyAppBar>
 
   @override
   Widget build(BuildContext context) {
+    var base = BaseWidget.of(context).dataStore.box;
     return SizedBox(
       width: double.infinity,
-      height: 132,
+      height: 70,
       child: Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -421,9 +414,9 @@ class _MyAppBarState extends State<MyAppBar>
               padding: const EdgeInsets.only(right: 20),
               child: GestureDetector(
                 onTap: () {
-                  // base.isEmpty
-                  //     ? warningNoTask(context)
-                  //     : deleteAllTask(context);
+                  base.isEmpty
+                      ? warningNoTask(context)
+                      : deleteAllTask(context);
                 },
                 child: const Icon(
                   CupertinoIcons.trash,
@@ -461,8 +454,8 @@ class FAB extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         elevation: 10,
         child: Container(
-          width: 70,
-          height: 70,
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
             color: Colors.blueGrey,
             borderRadius: BorderRadius.circular(15),

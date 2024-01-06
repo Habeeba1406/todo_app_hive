@@ -85,7 +85,10 @@ class _TaskWidgetState extends State<TaskWidget> {
 
             /// title of Task
             title: Padding(
-              padding: const EdgeInsets.only(bottom: 5, top: 3),
+              padding: const EdgeInsets.only(
+                bottom: 3,
+                top: 3,
+              ),
               child: Text(
                 taskControllerForTitle.text,
                 style: TextStyle(
